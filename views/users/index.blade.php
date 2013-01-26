@@ -3,10 +3,17 @@
         <h1>Lista de Utilizadores</h1>
     </div>
 </div>
+
         @if(Session::has('success'))
-             <span class="alert alert-success">{{Session::get('success')}}</span>
+            <center>    
+                 <p><span class="alert alert-success">{{Session::get('success')}}</span></p>
+            </center>
         @endif
-        <table class="table table-striped table-bordered tablesorter" id="myTable">
+    
+
+
+
+        <table class="table table-striped table-bordered tablesorter" id="tabledata">
                 <thead>
                         <tr>    <th>ID</th>
                                 <th>Name</th>

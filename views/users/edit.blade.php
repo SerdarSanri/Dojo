@@ -3,16 +3,15 @@
 
 	
 
-	<center>
 	<fieldset>
 		<legend><h1>Updating profile of user <b>{{$user->username}}</b></h1></legend><br/>
 
 		@if($errors->has())
 			<div>
-				{{ $errors->first('username', '<center><span class="error-box">:message</span></center>') }}
-				{{ $errors->first('name', '<center><span class="error-box">:message</span></center>') }}
-		        {{ $errors->first('password', '<center><span class="error-box">:message</span></center>') }}
-		        {{ $errors->first('email', '<center><span class="error-box">:message</span></center>') }}
+				{{ $errors->first('username', '<p><center><span class="alert alert-error">:message</span></center></p><br />') }}
+				{{ $errors->first('name', '<p><center><span class="alert alert-error">:message</span></center></p><br />') }}
+		        {{ $errors->first('password', '<p><center><span class="alert alert-error">:message</span></center></p><br />') }}
+		        {{ $errors->first('email', '<p><center><span class="alert alert-error">:message</span></center></p><br />') }}
 
 			</div>
 			<br />
@@ -74,4 +73,3 @@
 
 	{{ Form::close() }}
 	</fieldset>
-</center>

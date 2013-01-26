@@ -3,15 +3,17 @@ use Dojo\Models\User;
 class Dojo_User_Controller extends Dojo_Base_Controller{
 
 
-    
+    //get user list
     public function get_index(){
         $users = User::all();
         $this->layout->nest('content','dojo::users.index',array(
             'users'=>$users,
         ));
+
     
     } 
 
+    //get user info for edition
     public function get_edit($id){
     	$user = User::find($id);
     	$this->layout->nest('content','dojo::users.edit',array(
@@ -19,14 +21,15 @@ class Dojo_User_Controller extends Dojo_Base_Controller{
     	));
     }
 
+    //edit user info
     public function put_update(){
 
          //Guarda os valores do form e faz a pesquisa pelos dados antigos
         $id = Input::get('id');
         $olddata=User::find($id);
         $name = Input::get('name');
-        $username = Input::get('password');
-        $username = Input::get('password');
+        $username = Input::get('username');
+        $password = Input::get('password');
         $email = Input::get('email');
         $role = Input::get('role');
         $edit_info = array('enable' => Input::get('activo'));
@@ -41,7 +44,7 @@ class Dojo_User_Controller extends Dojo_Base_Controller{
         if(strcmp($olddata->email, $email) != 0){
             $edit_info["email"] = $email;
         }
-        if($password != ""){
+        if(!$password){
             $edit_info["password"] = Hash::make($password);
         }
         if($role != $olddata->role){
@@ -68,6 +71,7 @@ class Dojo_User_Controller extends Dojo_Base_Controller{
         }
     }
 
+    //view user profile
     public function get_view($id){
         $user = User::where('id','=', $id)->get();
         $this->layout->nest('content','dojo::users.view',array(
@@ -75,12 +79,14 @@ class Dojo_User_Controller extends Dojo_Base_Controller{
         ));
     }
 
-    public function delete_erase($id){
-        $sucess="User deleted with success";
-        User::find($id)->delete();
-        $this->layout->nest('content','dojo::users.view',array(
-                'success'=>$success,
-            ));
+    //delete user account
+    public function get_erase($id){
+        $success="User deleted with success!";
+        $user = User::find($id);
+        $user->delete();
+        return Redirect::to_route('dojo::index_user')
+            ->with('success',$success);
+        
     }
 
 

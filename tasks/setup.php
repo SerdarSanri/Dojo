@@ -1,7 +1,7 @@
 <?php
 
 use Laravel\CLI\Command as Command;
-use Dojo\Models\Admin as Admin;
+use Dojo\Models\User as User;
 class Dojo_Setup_Task {
 public function run($arguments){
     if(empty($arguments) || count($arguments) < 5){
@@ -16,7 +16,7 @@ public function run($arguments){
         'password' => Hash::make($arguments[4]),
         'role' => $role,
     );
-    $user = Admin::create($data);
+    $user = User::create($data);
     echo ($user) ? 'Admin created successfully!' : 'Error creating admin!';
 }
 }

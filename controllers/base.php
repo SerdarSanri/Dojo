@@ -16,6 +16,8 @@ class Dojo_Base_Controller extends Controller{
         Asset::container('footer')->add('jquery','http://code.jquery.com/jquery-latest.min.js');
         Asset::container('footer')->add('jqueryui','http://code.jquery.com/ui/1.10.0/jquery-ui.js');
         Asset::container('footer')->add('main','js/main.js');
+        Asset::container('footer')->add('datasort','http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js');
+        Asset::container('footer')->add('sorter','http://www.datatables.net/media/blog/bootstrap_2/DT_bootstrap.js');
 
         $this->filter('before','auth');
         $this->filter('before', 'csrf')->on('post,put');

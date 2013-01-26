@@ -6,8 +6,12 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-
+    <style type="text/css">
+    body{
+       padding-top: 60px;
+                padding-bottom: 40px;
+    }
+    </style>
 
    </head>
   <body>
@@ -32,11 +36,10 @@
             </div>
         </div>
 
-
 <div class="container">
   <div class="row">
     <div class="navbar-inner">
-      <h3>Painel de Controlo</h3>
+      <h3>Dojo Administration</h3>
 
     </div>
     <br />
