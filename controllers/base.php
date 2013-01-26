@@ -1,20 +1,24 @@
 <?php
 
 class Dojo_Base_Controller extends Controller{
+   
     public $restful = true;
     public $layout = 'dojo::layouts.main';
+
     public function __construct(){
         parent::__construct();
         Config::set('auth.driver','dojoauth');
 
         Asset::container('header')->bundle('dojo');
-        Asset::container('header')->add('bootstrap','css/bootstrap.min.css');
+        Asset::container('header')->add('bootstrap','css/bootstrap.css');
         
         Asset::container('footer')->bundle('dojo');
         Asset::container('footer')->add('jquery','http://code.jquery.com/jquery-latest.min.js');
-        Asset::container('footer')->add('bootstrapjs','js/bootstrap.min.js');
-        
+        Asset::container('footer')->add('jqueryui','http://code.jquery.com/ui/1.10.0/jquery-ui.js');
+        Asset::container('footer')->add('main','js/main.js');
+
         $this->filter('before','auth');
+        $this->filter('before', 'csrf')->on('post,put');
     }
 
     /**

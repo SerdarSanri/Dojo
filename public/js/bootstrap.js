@@ -2040,6 +2040,8 @@
   })
 
 }(window.jQuery);
+
+
 /* ==========================================================
  * bootstrap-affix.js v2.2.2
  * http://twitter.github.com/bootstrap/javascript.html#affix
@@ -2157,3 +2159,4 @@
 
 
 }(window.jQuery);
+
