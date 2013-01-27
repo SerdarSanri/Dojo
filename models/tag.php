@@ -1,7 +1,7 @@
 <?php
 
 namespace Dojo\Models;
-use \Laravel\Database\Eloquent\Model as Eloquent;
+use \Laravel\Database\Eloquent\Model as Eloquent, \Laravel\Input as Input;
 
 class Tag extends Eloquent{
 
