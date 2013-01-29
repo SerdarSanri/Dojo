@@ -25,7 +25,7 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->author->username}}</td>
                     <td>{{$post->created_at}}</td>
-                <td> <a rel="tooltip" title="Delete" id="dialog-confirm" href="{{URL::to_route('dojo::delete_article',array($user->id))}}"  role="button" data-toggle="modal" data-id="{{$user->id}}"><i class="icon-minus-sign"></i></a>   <a rel="tooltip" title="Edit" href="{{URL::to_route('dojo::edit_article',array($user->id))}}"><i class="icon-wrench"></i></a>  <a rel="tooltip" title="Show Profile" href="{{URL::to_route('dojo::view_article',array($user->id))}}"><i class="icon-search"></i></a></td></tr>
+                <td> <a rel="tooltip" title="Delete" id="dialog-confirm" href="{{URL::to_route('dojo::delete_article',array($post->id))}}"  role="button" data-toggle="modal" data-id="{{$post->id}}"><i class="icon-minus-sign"></i></a>   <a rel="tooltip" title="Edit" href="{{URL::to_route('dojo::edit_article',array($post->id))}}"><i class="icon-wrench"></i></a>  <a rel="tooltip" title="Show Profile" href="{{URL::to_route('dojo::view_article',array($post->id))}}"><i class="icon-search"></i></a></td></tr>
                 
           @endforeach
                 </tbody>

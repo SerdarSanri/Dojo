@@ -6,7 +6,7 @@ use \Laravel\Database\Eloquent\Model as Eloquent, \Laravel\Input as Input;
 class Tag extends Eloquent{
 
     public function articles(){
-        return $this->has_many_and_belong_to('Article');
+        return $this->has_many_and_belong_to('Dojo\Models\Article');
     }
 
     /*
