@@ -11,6 +11,9 @@ class Dojo_Base_Controller extends Controller{
 
         Asset::container('header')->bundle('dojo');
         Asset::container('header')->add('bootstrap','css/bootstrap.css');
+        Asset::container('header')->add('boostrapresponsive','css/bootstrap-responsive.css');
+        Asset::container('header')->add('changelists','css/changelists.css');
+        Asset::container('header')->add('commons','css/commons.css');
         
         Asset::container('footer')->bundle('dojo');
         Asset::container('footer')->add('jquery','http://code.jquery.com/jquery-latest.min.js');

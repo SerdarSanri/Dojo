@@ -7,6 +7,7 @@ class Dojo_Login_Controller extends Controller{
         Config::set('auth.driver','dojoauth');
         Asset::container('header')->bundle('dojo');
         Asset::container('header')->add('bootstrap','css/bootstrap.min.css');
+        //Asset::container('header')->add('bootstrap','css/bootstrap-responsive.min.css');
         Asset::container('header')->add('login','css/login.css');
 
     }

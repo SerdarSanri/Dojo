@@ -17,51 +17,47 @@
   <body>
      <!-- TOP BAR -->
    <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                   <a href="{{URL::to('/')}}" class="btn btn-primary navbutton"><i class="icon-circle-arrow-left"></i>Return to WebSite</a> 
-                   <div class="nav-collapse collapse">
-                        <ul class="nav">
-                         
-                             <li><a href="{{URL::to('dojo/logout')}}" class="round button dark menu-logoff"><i class="icon-off"></i>Log out</a></li>
-                        </ul>
-                                          
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-        </div>
-
-<div class="container">
-  <div class="row">
-    <div class="navbar-inner">
-      <h3>Dojo Administration</h3>
-
-    </div>
-    <br />
-
-    <div class="row-fluid">
-      <div class="span3">
-        <ul class="nav nav-list well">
-          <li class="nav-header">Dashboard</li>
-          <li><a href="{{URL::to('dojo/users')}}"><i class="icon-user"></i>Users</a></li>
-          <li><a href="{{URL::to('dojo/articles')}}"><i class="icon-pencil"></i>Articles</a></li>
-          <li><a href="{{URL::to('dojo/projects')}}"><i class="icon-briefcase"></i>Projects</a></li>
-          <li><a href="{{URL::to('dojo/contacts')}}"><i class="icon-dashboard"></i>Contacts</a></li>
-          <li><a href="{{URL::to('dojo/settings')}}"><i class="icon-dashboard"></i>Settings</a></li>
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="#" name="top">Dojo</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li><a href="{{URL::to('/dojo')}}"><i class="icon-home icon-white"></i> Home</a></li>
+          <li class="divider-vertical"></li>
+          <li class="active"><a href="{{URL::to('/dojo/articles')}}"><i class="icon-file icon-white"></i>Articles</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="{{URL::to('/dojo/projects')}}"><i class="icon-envelope icon-white"></i>Projects</a></li>
+          <li><a href="{{URL::to('/dojo/settings')}}"><i class="icon-lock icon-white"></i>Settings</a></li>
+          <li class="divider-vertical"></li>
         </ul>
+        <div class="btn-group pull-right">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-user"></i> admin <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><i class="icon-wrench"></i> Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="icon-share"></i> Logout</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="span9">
- 
-        {{$content}}
-      </div>
+      <!--/.nav-collapse -->
     </div>
+    <!--/.container-fluid -->
   </div>
-</div>  
+  <!--/.navbar-inner -->
+</div>
+<!--/.navbar -->
+
+<div id="main-container" class='container-fluid'>
+
+        {{$content}}
+    </div>
 
   <!-- FOOTER -->
   <div id="footer">
