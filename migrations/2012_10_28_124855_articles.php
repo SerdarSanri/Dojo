@@ -17,6 +17,8 @@ class Dojo_Articles {
             $table->integer('author_id');
             $table->string('cover',256);
             $table->integer('comments');
+            $table->boolean('draft');
+            $table->boolean('visible')
             $table->timestamps();
         });
     }

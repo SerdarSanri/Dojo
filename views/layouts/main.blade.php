@@ -29,7 +29,7 @@
         <ul class="nav">
           <li><a href="{{URL::to('/dojo')}}"><i class="icon-home icon-white"></i> Home</a></li>
           <li class="divider-vertical"></li>
-          <li class="active"><a href="{{URL::to('/dojo/articles')}}"><i class="icon-file icon-white"></i>Articles</a></li>
+          <li class="active"><a href="{{URL::to_route('dojo::index_article','index')}}"><i class="icon-file icon-white"></i>Articles</a></li>
           <li class="divider-vertical"></li>
           <li><a href="{{URL::to('/dojo/projects')}}"><i class="icon-envelope icon-white"></i>Projects</a></li>
           <li><a href="{{URL::to('/dojo/settings')}}"><i class="icon-lock icon-white"></i>Settings</a></li>
@@ -64,6 +64,8 @@
 
   
   </div> <!-- end footer -->
-  {{Asset::container('footer')->scripts()}}
+      {{Asset::container('footer')->scripts()}}
+
+       
   </body>
 </html>

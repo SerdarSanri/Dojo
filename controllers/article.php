@@ -2,10 +2,32 @@
 use Dojo\Models\Article, Dojo\Models\Tag;
 class Dojo_Article_Controller extends Dojo_Base_Controller{
 
-	public function get_index(){
-		$articles = Article::all();
+	public function get_index($type = "index", $id="all",$sorter = "ns"){
+		
+
+
+
+		//sorter and searcher for table
+		if($type == "index" && $id== "all" && (preg_match("/^(title|created_at|author_id|draft|published)/", $sorter))){
+			$articles = Article::order_by($sorter,'asc')->get();
+			$count = Article::count();
+
+		}elseif ((preg_match("/^(draft|published)/", $type)) && (preg_match("/^(1|0)/",$id)) && $sorter == "ns") {
+			$articles = Article::where($type,'=',$id)->get();
+			$count =Article::where($type,'=',$id)->count();
+		}elseif((preg_match("/^(index|draft|published)/", $type)) && (preg_match("/^(1|0)/",$id)) && (preg_match("/^(title|published|author_id|draft|created_at|ns)/", $sorter))){
+			$articles = Article::order_by($sorter,'asc')->where($type,'=',$id)->get();
+			$count = Article::order_by($sorter,'asc')->where($type,'=',$id)->count();
+		}else{
+			$articles = Article::all();	
+			$count = Article::count();
+
+		}
+
+		//$articles = Article::all();
 		$this->layout->nest('content','dojo::articles.index',array(
 			'articles'=>$articles,
+			'count'=>$count,
 		));
 	}
 
@@ -13,6 +35,7 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 		$article = Article::find($id);
 		$this->layourt->nest('content','dojo::articles.edit',array(
 			'article'=>$article,
+			
 		));
 	}
 
@@ -111,6 +134,24 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 
 		    return Redirect::to('dojo/articles/');
 		}	
+	}
+
+	function post_redactorupload(){
+		$rules = array(
+			'file' => 'image|max:100000'
+		);
+
+		$validation = Validator::make(Input::all(), $rules);
+		$file = Input::file('file');
+		if($validation->fails()){
+			return FALSE;
+		}else{
+			if(Input::upload('file','public/images/articles',$file['name'])){
+				return Response::json(array('filelink'=>'images/' . $file['name']));
+			}
+			return FALSE;
+		}
+
 	}
 
 }

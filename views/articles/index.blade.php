@@ -16,11 +16,10 @@
     <ul class="object-tools pull-right">
 
         <li>
-            <a href="/admin/articles/add/" class="addlink btn btn-primary">Add Article</a>
+            <a href="/dojo/articles/new" class="addlink btn btn-primary">Add Article</a>
         </li>
 
     </ul>
-    <script type="text/javascript">django.jQuery("ul.object-tools li a").addClass("btn");</script>
 </div>
 <div id="content-main">
 
@@ -48,60 +47,42 @@
                                         <li class="nav-header">Filter</li>
 
                                         <li class="dropdown-submenu">
-                                            <a href="#">By staff status</a>
+                                            <a href="#">By draft status</a>
                                             <ul class="dropdown-menu">
 
                                                 <li class="active">
-                                                    <a href="?">All</a>
+                                                    <a href="{{URL::to_route('dojo::index_article',array('index'))}}">All</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="?is_staff__exact=1">Yes</a>
+                                                    <a href="{{URL::to_route('dojo::index_article',array('draft','1'))}}">Yes</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="?is_staff__exact=0">No</a>
+                                                    <a href="{{URL::to_route('dojo::index_article',array('draft','0'))}}">No</a>
                                                 </li>
 
                                             </ul>
                                         </li>
                                         <li class="dropdown-submenu">
-                                            <a href="#">By superuser status</a>
+                                            <a href="#">Published</a>
                                             <ul class="dropdown-menu">
 
                                                 <li class="active">
-                                                    <a href="?">All</a>
+                                                    <a href="{{URL::to_route('dojo::index_article',array('index'))}}">All</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="?is_superuser__exact=1">Yes</a>
+                                                    <a href="{{URL::to_route('dojo::index_article',array('published','1'))}}">Yes</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="?is_superuser__exact=0">No</a>
+                                                    <a href="{{URL::to_route('dojo::index_article',array('published','0'))}}">No</a>
                                                 </li>
 
                                             </ul>
                                         </li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#">By active</a>
-                                            <ul class="dropdown-menu">
-
-                                                <li class="active">
-                                                    <a href="?">All</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="?is_active__exact=1">Yes</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="?is_active__exact=0">No</a>
-                                                </li>
-
-                                            </ul>
-                                        </li>
-
+                                   
                                     </ul>
                                 </li>
                             </ul>
@@ -136,9 +117,8 @@
 
             <div class="well">
                 <span class="label label-inverse pull-left info-counter">
-                    2
-                          
-                              users
+                    {{$count}} Articles
+
                 </span>
                 <div class="divider"></div>
 
@@ -188,19 +168,11 @@
                                 <div class="sortoptions">
                                     <a class="sortremove" href="?o=" title="Remove from sorting"></a>
 
-                                    <a href="?o=-1" class="toggle ascending" title="Toggle sorting"></a>
+                                    <a href="<?echo php URL::full() . "/ns"; ?>" class="toggle ascending" title="Toggle sorting"></a>
                                 </div>
 
                                 <div class="text">
-                                    <a href="?o=-1">Title</a>
-                                </div>
-                                <div class="clear"></div>
-                            </th>
-
-                            <th scope="col"  class="sortable">
-
-                                <div class="text">
-                                    <a href="?o=2.1">Writer</a>
+                                    <a href="<?echo php URL::full() . "/title"; ?>">Title</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -208,7 +180,7 @@
                             <th scope="col"  class="sortable">
 
                                 <div class="text">
-                                    <a href="?o=3.1">Published at</a>
+                                    <a href="<?php URL::full() . "/writer"; ?>">Writer</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -216,7 +188,7 @@
                             <th scope="col"  class="sortable">
 
                                 <div class="text">
-                                    <a href="?o=4.1">Draft</a>
+                                    <a href="<?php URL::full() . "/created_at"; ?>">Published at</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -224,7 +196,15 @@
                             <th scope="col"  class="sortable">
 
                                 <div class="text">
-                                    <a href="?o=5.1">Visible</a>
+                                    <a href="<?php URL::full() . "/draft"; ?>">Draft</a>
+                                </div>
+                                <div class="clear"></div>
+                            </th>
+
+                            <th scope="col"  class="sortable">
+
+                                <div class="text">
+                                    <a href="<?php URL::full() . "/published"; ?>">Visible</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -233,19 +213,32 @@
                     </thead>
                     <tbody>
                         @foreach($articles as $post)
-                        <tr class="row{{$post->
-                            id}}">
+                        <tr class="row{{$post->id}}">
                             <td class="action-checkbox">
                                 <input type="checkbox" class="action-select" value="{{$post->id}}" name="_selected_action" /></td>
                             <th>
                                 <a href="{{URL::to('dojo/articles/view/$post->id')}}">{{$post->title}}</a>
                             </th>
                             <td>{{$post->author->username}}</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <img src="/static/admin/img/icon-yes.gif" alt="True" />
+                            <td>{{$post->created_at}}</td>
+                            @if($post->draft == 0){
+                              <td>
+                                <span class="label label-important">No</span>
                             </td>
+                              <td>
+                                 <span class="label label-success">Yes</span>
+                              </td>  
+                            @else
+                                  <td>
+                                <span class="label label-success">Yes</span>
+                            </td>
+                              <td>
+                                 <span class="label label-important">No</span>
+                              </td>  
+
+                            }
+                            @endif
+                 
                         </tr>
                         @endforeach
                     </tbody>
@@ -262,3 +255,57 @@
 
 <div id="footer"></div>
 <!-- END Container -->
+<script type="text/javascript">
+
+    (function ($) {
+        fix_positions_on_menu = function (){
+          width = Math.max( $(window).innerWidth(), window.innerWidth);
+          if(width < '768'){
+            $('#filters').addClass('nav-collapse collapse navbar-responsive-collapse');
+          }else{
+            $('#filters').removeClass('nav-collapse collapse navbar-responsive-collapse');
+          }
+          if(width <= '768'){
+            $('#searchbar').addClass('input-xlarge').removeClass('span2');
+          }else{
+            $('#searchbar').addClass('span2').removeClass('input-xlarge');
+          }
+        }
+        $(document).ready(function(){
+            fix_positions_on_menu();
+            $subnav = $('.subnav');
+            $subnav.affix({
+                offset: {
+                    top: function () {
+                        $top = 0;
+                        width = Math.max( $(window).innerWidth(), window.innerWidth);
+                        if(width >= '768'){
+                            if(width >= '979'){
+                              $top = 80;
+                            }else{
+                              $top = 120;
+                            }
+                            if($(window).scrollTop() >= $top){
+                                $subnav.addClass('navbar-fixed-top');
+                            }else{
+                                $subnav.removeClass('navbar-fixed-top');
+                            }
+                        }
+                        return $top;
+                    }
+                }
+            });
+        });
+        $(window).resize(function(){
+            fix_positions_on_menu();
+        });
+    })(window.jQuery);
+    
+</script>
+
+<?php
+/*
+/@todo list
+/-Fix paths to sorting
+/-Implement search 
+/-put select box working 

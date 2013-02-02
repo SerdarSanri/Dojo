@@ -14,13 +14,13 @@ class Dojo_Base_Controller extends Controller{
         Asset::container('header')->add('boostrapresponsive','css/bootstrap-responsive.css');
         Asset::container('header')->add('changelists','css/changelists.css');
         Asset::container('header')->add('commons','css/commons.css');
+        Asset::container('header')->add('redactor','css/redactor.css');
         
         Asset::container('footer')->bundle('dojo');
-        Asset::container('footer')->add('jquery','http://code.jquery.com/jquery-latest.min.js');
-        Asset::container('footer')->add('jqueryui','http://code.jquery.com/ui/1.10.0/jquery-ui.js');
-        Asset::container('footer')->add('main','js/main.js');
-        Asset::container('footer')->add('datasort','http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js');
-        Asset::container('footer')->add('sorter','http://www.datatables.net/media/blog/bootstrap_2/DT_bootstrap.js');
+        Asset::container('footer')->add('jquery','http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js');
+        Asset::container('footer')->add('core','js/core.js');
+        Asset::container('footer')->add('bootstrap','js/bootstrap.min.js');
+        Asset::container('footer')->add('redactorjs','js/redactor.min.js');
 
         $this->filter('before','auth');
         $this->filter('before', 'csrf')->on('post,put');
