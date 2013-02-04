@@ -112,7 +112,7 @@
             <!-- /navbar-inner --> </div>
         <form id="changelist-form" action="" method="post" class="with-top-actions">
             <div style='display:none'>
-                <input type='hidden' name='csrfmiddlewaretoken' value='sZcKhQZgJkCUVaN7b6CXuntxwjdtHtmw' />
+                {{Form::token()}}
             </div>
 
             <div class="well">
@@ -130,12 +130,12 @@
 
                             <select name="action">
                                 <option value="" selected="selected">---------</option>
-                                <option value="delete_selected">Delete selected users</option>
+                                <option value="delete_selected">Delete selected articles</option>
+                                <option value="publish_selected">Publish selected articles</option>
+                                <option value="draft_selected">Draft selected articles </option>
                             </select>
 
                         </label>
-
-                        <input type="hidden" class="select-across" value="0" name="select_across" />
 
                         <button type="submit" class="btn" title="Run the selected action" name="index" value="0">Go</button>
                     </div>
@@ -168,19 +168,11 @@
                                 <div class="sortoptions">
                                     <a class="sortremove" href="?o=" title="Remove from sorting"></a>
 
-                                    <a href="<?echo php URL::full() . "/ns"; ?>" class="toggle ascending" title="Toggle sorting"></a>
+                                    <a href="" class="toggle ascending" title="Toggle sorting"></a>
                                 </div>
 
                                 <div class="text">
-                                    <a href="<?echo php URL::full() . "/title"; ?>">Title</a>
-                                </div>
-                                <div class="clear"></div>
-                            </th>
-
-                            <th scope="col"  class="sortable">
-
-                                <div class="text">
-                                    <a href="<?php URL::full() . "/writer"; ?>">Writer</a>
+                                    <a href="<?php echo URL::current().'/title'?>">Title</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -188,7 +180,7 @@
                             <th scope="col"  class="sortable">
 
                                 <div class="text">
-                                    <a href="<?php URL::full() . "/created_at"; ?>">Published at</a>
+                                    <a href="<?php echo URL::current().'/author_id'?>">Writer</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -196,7 +188,7 @@
                             <th scope="col"  class="sortable">
 
                                 <div class="text">
-                                    <a href="<?php URL::full() . "/draft"; ?>">Draft</a>
+                                    <a href="<?php echo URL::current().'/created_at'?>">Published at</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -204,7 +196,15 @@
                             <th scope="col"  class="sortable">
 
                                 <div class="text">
-                                    <a href="<?php URL::full() . "/published"; ?>">Visible</a>
+                                    <a href="<?php echo URL::current().'/draft'?>">Draft</a>
+                                </div>
+                                <div class="clear"></div>
+                            </th>
+
+                            <th scope="col"  class="sortable">
+
+                                <div class="text">
+                                    <a href="<?php echo URL::current().'/visible'?>">Visible</a>
                                 </div>
                                 <div class="clear"></div>
                             </th>
@@ -215,28 +215,31 @@
                         @foreach($articles as $post)
                         <tr class="row{{$post->id}}">
                             <td class="action-checkbox">
-                                <input type="checkbox" class="action-select" value="{{$post->id}}" name="_selected_action" /></td>
+                                <input type="checkbox" class="action-select" value="{{$post->id}}" name="value{{$post->id}}" /></td>
                             <th>
                                 <a href="{{URL::to('dojo/articles/view/$post->id')}}">{{$post->title}}</a>
                             </th>
                             <td>{{$post->author->username}}</td>
                             <td>{{$post->created_at}}</td>
-                            @if($post->draft == 0){
+                            @if($post->draft == 0)
                               <td>
                                 <span class="label label-important">No</span>
                             </td>
+                            @else
                               <td>
                                  <span class="label label-success">Yes</span>
                               </td>  
-                            @else
+                            @endif
+                            @if($post->published == 1)
                                   <td>
                                 <span class="label label-success">Yes</span>
                             </td>
-                              <td>
+                            @else
+                            <td>
                                  <span class="label label-important">No</span>
                               </td>  
 
-                            }
+                            
                             @endif
                  
                         </tr>
@@ -306,6 +309,6 @@
 <?php
 /*
 /@todo list
-/-Fix paths to sorting
 /-Implement search 
 /-put select box working 
+*/

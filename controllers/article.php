@@ -31,6 +31,12 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 		));
 	}
 
+	
+	public function post_index(){
+		$stuff = Input::all();
+		dd($stuff);
+	}
+
 	public function get_edit($id){
 		$article = Article::find($id);
 		$this->layourt->nest('content','dojo::articles.edit',array(
