@@ -7,6 +7,10 @@
         <a href="{{URL::to('/dojo/articles')}}" class="active">Articles</a>
         <span class="divider">/</span>
     </li>
+     <li>
+        <a href="" class="active">New</a>
+        <span class="divider">/</span>
+    </li>
 </ul>
   <div id="content" class="colM">
         
@@ -79,7 +83,7 @@
             
     
             
-            
+            <!--
                 <div class="control-group  field-password">
                     
                         
@@ -105,8 +109,20 @@
                             
                         
 
-                </div>
+                </div> -->
                 <div class="control-group">
+                    <div class="control-label"><label for="id_password2" class="required">Draft:</label></div>
+                                <div class="controls">
+                                    {{Form::select('draft', array(0 => 'No',1 => 'Yes'),0)}}
+                               </div>
+                    </div>
+                     <div class="control-group">
+                    <div class="control-label"><label for="id_password2" class="required">Published:</label></div>
+                                <div class="controls">
+                                      {{Form::select('published', array(0 => 'No',1 => 'Yes'),0)}}
+                                </div>
+                    </div>
+                    <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Cover:</label></div>
                                 <div class="controls">
                                     {{ Form::textarea('post_body', '',array('id'=>'mytext')) }}
@@ -114,10 +130,11 @@
                     </div>
 
                 </div>   
+                </div>   
+             
             
     
 </fieldset>
-<script type="text/javascript">document.getElementById("id_username").focus();</script>
 
 
     
@@ -134,17 +151,10 @@
         </div>
         <div class="pull-right save-options-box">
             
-                <input type="submit" value="Save and continue editing" name="_continue"  class="btn btn-primary"/>
+                <a href="{{URL::to_route('dojo::index_article')}}"><input type="submit" value="Save" name="_continue"  class="btn btn-primary"/></a>
             
-
             
-
-            
-                <input type="submit" value="Save and add another" name="_addanother"  class="btn" />
-            
-
-            
-                <input type="submit" value="Save" name="_save"  class="btn"/>
+                <a href="{{URL::to_route('dojo::index_article')}}"><input value="Cancel" name="_cancel"  class="btn"/></a>
             
         </div>
     </div>
@@ -156,7 +166,7 @@
         <script type="text/javascript">
                $(function() {
                      $('#mytext').redactor({
-                           imageUpload: 'dojo/articles/new/image',
+                           imageUpload: '{{URL::to_route("dojo::new_image")}}',
                            
                      });
                });

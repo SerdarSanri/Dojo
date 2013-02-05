@@ -97,9 +97,9 @@
 
                             <form action="" method="get" class="navbar-search pull-left" id="search-change-list">
                                 <div class="input-append">
-                                    <input type="text" placeholder='Search "Users"' name="q" value="" id="searchbar" class="span2">
+                                  <!--  <input type="text" placeholder='Search "Users"' name="q" value="" id="searchbar" class="span2">
 
-                                    <button type="submit" class="btn">Search</button>
+                                    <button type="submit" class="btn">Search</button> -->
 
                                 </div>
                             </form>
@@ -128,7 +128,7 @@
                         <label>
                             <span>Action:</span>
 
-                            <select name="action">
+                            <select name="action" id="action">
                                 <option value="" selected="selected">---------</option>
                                 <option value="delete_selected">Delete selected articles</option>
                                 <option value="publish_selected">Publish selected articles</option>
@@ -142,8 +142,6 @@
                 </div>
                 <div class="actions pull-right">
 
-                    <script type="text/javascript">var _actions_icnt="2";</script>
-                    <span class="action-counter label label-info">0 of 2 selected</span>
 
                 </div>
             </div>
@@ -217,7 +215,7 @@
                             <td class="action-checkbox">
                                 <input type="checkbox" class="action-select" value="{{$post->id}}" name="value{{$post->id}}" /></td>
                             <th>
-                                <a href="{{URL::to('dojo/articles/view/$post->id')}}">{{$post->title}}</a>
+                                <a href="{{URL::to_route('dojo::edit_article',array($post->id))}}">{{$post->title}}</a>
                             </th>
                             <td>{{$post->author->username}}</td>
                             <td>{{$post->created_at}}</td>
