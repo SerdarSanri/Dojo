@@ -18,7 +18,7 @@ class Dojo_Base_Controller extends Controller{
         
         Asset::container('footer')->bundle('dojo');
         Asset::container('footer')->add('jquery','http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js');
-        Asset::container('footer')->add('core','js/core.js');
+        Asset::container('footer')->add('jqueryui','http://code.jquery.com/ui/1.10.0/jquery-ui.js');
         Asset::container('footer')->add('bootstrap','js/bootstrap.min.js');
         Asset::container('footer')->add('redactorjs','js/redactor.min.js');
 

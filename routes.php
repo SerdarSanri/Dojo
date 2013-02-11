@@ -16,6 +16,8 @@ Route::put('/(:bundle)/articles/edit/update',array('as'=>'dojo::update_article',
 Route::any('/(:bundle)/articles/delete/(:any)',array('as'=>'dojo::delete_article','uses'=>'Dojo::article@erase'));
 Route::any('/(:bundle)/articles/new',array('as'=>'dojo::new_article','uses'=>'Dojo::article@new'));
 Route::any('/(:bundle)/articles/(:any?)/(:any?)/(:any?)',array('as'=>'dojo::index_article','uses'=>'Dojo::article@index'));
+Route::post('/(:bundle)/articles/search',array('uses'=>'Dojo::article@search'));
+Route::get('/(:bundle)/articles/results/(:all)',array('as'=>'dojo::results_article','uses'=>'Dojo::article@results'));
 
 
 Route::controller(Controller::detect('dojo'));

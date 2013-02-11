@@ -3,7 +3,7 @@ use Dojo\Models\Article, Dojo\Models\Tag;
 class Dojo_Article_Controller extends Dojo_Base_Controller{
 
 	public function get_index($type = "index", $id="all",$sorter = "ns"){
-		
+		$title = "List of articles";
 
 
 
@@ -68,7 +68,9 @@ get();
 				break;
 		}
 
-		return Redirect::to_route('dojo::index_article');
+		return Redirect::to_route('dojo::index_article')
+			->with('title','List of articles')
+			->with('message','Article(s) Updated');
 		
 	}
 
@@ -117,7 +119,6 @@ get();
 	    }
 	}
 
-	public function get_view($id){}
 
 	public function get_erase($id){
 		$success="Article deleted with success!";
@@ -202,4 +203,35 @@ get();
 
 	}
 
+	
+
+	public function get_results($keyword){
+		$articles = Article::get_search($keyword);
+		dd($articles);
+		return View::make('dojo::articles.results')
+			->with('title', 'Results search for $keyword')
+			->with('articles', Articles::search($keyword));
+
+	}
+
+	public function post_search() {
+		$keyword = Input::get('keyword');
+
+		if (empty($keyword)) {
+			return Redirect::to_route('dojo::index_article')
+				->with('message', 'No keyword entered, please try again')
+				->with('title','List of articles');
+		}
+
+		return Redirect::to_route('dojo::results_article',"$keyword");
+	}
+
+
+
 }
+/**
+ * @Todo
+ *
+ * Fix search behaviour
+ * Fix upload files
+ */

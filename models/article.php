@@ -42,4 +42,9 @@ class Article extends Eloquent{
     	$article = Article::with('author')->find($id);
     	$article->delete();
     }
+
+    public static function get_search($keyword){
+        $article = static::where('title','LIKE', '%'.$keyword.'%')->paginate(5);
+        return $article;
+    }
 }

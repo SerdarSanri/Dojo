@@ -14,13 +14,9 @@
     @if(Session::has('title'))
         <h1>{{ Session::get('message') }}</h1>
     @else 
-         <h1>List of articles</h1>
+         <h1>Resultados da pesquisa</h1>
     @endif
     <ul class="object-tools pull-right">
-
-        <li>
-            <a href="/dojo/articles/new" class="addlink btn btn-primary">Add Article</a>
-        </li>
 
     </ul>
     @if(Session::has('message'))
@@ -43,58 +39,7 @@
                     <a href="#" title="Users" class="brand"> <i class="icon-th-list pull-left"></i>
                     </a>
 
-                    <div class="nav-collapse collapse navbar-responsive-collapse pull-left" id="filters">
-                        <div class="pull-right">
-                            <ul class="nav">
-                                <li class="dropdown">
-                                    <a data-toggle="dropdown" class="dropdown-toggle dropdown-filters" href="#">
-                                        Filters <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-
-                                        <li class="nav-header">Filter</li>
-
-                                        <li class="dropdown-submenu">
-                                            <a href="#">By draft status</a>
-                                            <ul class="dropdown-menu">
-
-                                                <li class="active">
-                                                    <a href="{{URL::to_route('dojo::index_article',array('index'))}}">All</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('draft','1'))}}">Yes</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('draft','0'))}}">No</a>
-                                                </li>
-
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Published</a>
-                                            <ul class="dropdown-menu">
-
-                                                <li class="active">
-                                                    <a href="{{URL::to_route('dojo::index_article',array('index'))}}">All</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('published','1'))}}">Yes</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('published','0'))}}">No</a>
-                                                </li>
-
-                                            </ul>
-                                        </li>
-                                   
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                    
                     </div>
                     <!-- /.nav-collapse -->
                     <div class="pagination pull-left">
@@ -102,7 +47,7 @@
                     </div>
                     <div class="nav-collapse collapse navbar-responsive-collapse">
                         <div class="pull-right">
-                            <!--
+
                             <form action="articles/search" method="POST" class="navbar-search pull-left" id="search-change-list">
                                 <div class="input-append">
                                                 {{ Form::text('keyword', '', array('id'=>'keyword')) }}
@@ -111,7 +56,7 @@
                                     <button type="submit" class="btn">Search</button>
 
                                 </div>
-                            </form> -->
+                            </form>
 
                         </div>
                     </div>
