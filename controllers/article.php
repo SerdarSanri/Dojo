@@ -2,6 +2,16 @@
 use Dojo\Models\Article, Dojo\Models\Tag;
 class Dojo_Article_Controller extends Dojo_Base_Controller{
 
+
+	
+	/**
+	 * Get the list of articles to show in admin paneel , with optional sorting and filter search
+	 * @param  string $type   type of filter (index/draft/published)
+	 * @param  string $id     type of values we want search (all|0|1)
+	 * @param  string $sorter type of order that we it will display results
+	 * @return array $articles and $count   where $articles have all info about the articles we will show. And the $count it will display how many items we get
+	 */
+	
 	public function get_index($type = "index", $id="all",$sorter = "ns"){
 		$title = "List of articles";
 
@@ -9,8 +19,7 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 
 		//sorter and searcher for table
 		if($type == "index" && $id== "all" && (preg_match("/^(title|created_at|author_id|draft|published)/", $sorter))){
-			$articles = Article::order_by($sorter,'asc')->
-get();
+			$articles = Article::order_by($sorter,'asc')->get();
 			$count = Article::count();
 
 		}elseif ((preg_match("/^(draft|published)/", $type)) && (preg_match("/^(1|0)/",$id)) && $sorter == "ns") {
@@ -33,6 +42,12 @@ get();
 		));
 	}
 
+	
+
+	/**
+	 * Update/Delete post from articles table have support for multi choice
+	 * @return string thats notices that articles were updated/modified
+	 */
 	
 	public function post_index(){
 		$data = Input::all();
@@ -74,8 +89,16 @@ get();
 		
 	}
 
+
+	/**
+	 * This function it will get the id of article that we want edit and present a page with the old data
+	 * @param  integer $id id of the article we want to edit
+	 * @return nothing
+	 */
+	
 	public function get_edit($id){
-				$user = Auth::user();
+		
+		$user = Auth::user();
 
 		$article = Article::find($id);
 		$this->layout->nest('content','dojo::articles.edit',array(
@@ -85,6 +108,11 @@ get();
 		));
 	}
 
+
+	/**
+	 * This function it will analyse the new data with the old one and check what it will be updated in the defined article
+	 */
+	
 	public function put_edit(){
 		$id = Input::get('id');
 		$olddata = Article::find($id);
@@ -120,14 +148,10 @@ get();
 	}
 
 
-	public function get_erase($id){
-		$success="Article deleted with success!";
-        $article = Article::find($id);
-        $article->delete();
-        return Redirect::to_route('dojo::index_article')
-            ->with('success',$success);
-	}
-
+	/**
+	 * Function that will show the page for create a new article
+	 * @return array $user it will send the user info
+	 */
 	public function get_new(){
 		$user = Auth::user();
 		$this->layout->nest('content','dojo::articles.add',array(
@@ -135,6 +159,10 @@ get();
     	));
 	}
 
+	/**
+	 * Function that it will handle with post creation and validate all fields of creation
+	 * @todo Fix upload bug , since when we dont specify a cover it will try upload something
+	 */
 	public function post_new(){
 		$new_post =  array(
         'title'    => Input::get('post_title'),
@@ -174,37 +202,44 @@ get();
 
 		    if(!empty($new_post['cover'])){
 		          $img = Input::file('cover');
-			      $directory = path('public').'uploads/thumbnails/articles/';
+			      $directory = path('public').'public/thumbnails/articles/';
 			      Input::upload('cover', $directory, Input::file('cover.name'));
 			}
-			// @todo: Fix upload bug , since when we dont specify a cover it will try upload something
 
 		    return Redirect::to('dojo/articles/');
 		}	
 	}
 
+	/**
+	 * Function that handle with image upload when using refactor editor
+	 * @todo fix upload of images
+	 * @return json response with link for the image
+	 */
 	public function post_redactorupload(){
 		$rules = array(
 			'file' => 'image|max:100000'
 		);
 
 		$path = path('base');
-		die($path);
 		$validation = Validator::make(Input::all(), $rules);
 		$file = Input::file('file');
 		if($validation->fails()){
-			return FALSE;
+			die("teste");
+			//return FALSE;
 		}else{
 			if(Input::upload('file','public/images/articles',$file['name'])){
-				return Response::json(array('filelink'=>'images/' . $file['name']));
+				return Response::json(array('filelink'=>URL::base() .'/images/articles/' . $file['name']));
 			}
 			return FALSE;
 		}
 
 	}
 
-	
-
+	/**
+	 * Functions that handles with search results and display them
+	 * @param  string $keyword keyword for the search in database
+	 * @return array $articles array of articles that match with the keyword
+	 */
 	public function get_results($keyword){
 		$articles = Article::get_search($keyword);
 		dd($articles);
@@ -214,6 +249,9 @@ get();
 
 	}
 
+	/**
+	 * Function that will check if the $keyword is empty or a valid search query
+	 */
 	public function post_search() {
 		$keyword = Input::get('keyword');
 

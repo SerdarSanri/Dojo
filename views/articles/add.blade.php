@@ -92,10 +92,16 @@
                                       {{Form::select('published', array(0 => 'No',1 => 'Yes'),0)}}
                                 </div>
                     </div>
-                    <div class="control-group">
+                     <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Cover:</label></div>
                                 <div class="controls">
-                                    {{ Form::textarea('post_body', '',array('id'=>'mytext')) }}
+                                      <input type="file" placeholder="Choose a photo to upload" name="cover" id="cover" />
+                                </div>
+                    </div>
+                    <div class="control-group">
+                    <div class="control-label"><label for="id_password2" class="required">Post Body:</label></div>
+                                <div class="controls">
+                                    {{ Form::textarea('post_body', '',array('id'=>'post_body')) }}
                                 </div>
                     </div>
 
@@ -135,7 +141,7 @@
 {{Asset::container('footer')->scripts()}}
         <script type="text/javascript">
                $(function() {
-                     $('#mytext').redactor({
+                     $('#post_body').redactor({
                            imageUpload: '{{URL::to_route("dojo::new_image")}}',
                            
                      });
