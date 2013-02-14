@@ -164,17 +164,13 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 	 * @todo Fix upload bug , since when we dont specify a cover it will try upload something
 	 */
 	public function post_new(){
-		$new_post =  array(
-        'title'    => Input::get('post_title'),
-        'post_body'     => Input::get('post_body'),
-        'author_id'   => Input::get('post_author'),
-        'slug' => Str::slug(Input::get('post_title')),
-        'draft' => Input::get('draft'),
-        'published' => Input::get('published'),
-        );
-    	
+        $new_post =  Input::all();
+        unset($new_post['csrf_token']);
+        unset($new_post['tags']);
+        unset($new_post['_continue']);
+        unset($new_post['_cancel']);
+        $new_post['slug']= Str::slug($new_post['title']);    	
    
-    	
 	    $rules = array(
             'title'     => 'required|min:3|max:255',
             'cover'  => 'image',
@@ -189,25 +185,35 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 	                ->with('user', Auth::user())
 	                ->with_errors($validation)
 	                ->with_input();
-        }else{
-	        $tags = Tag::input('tags');
-			$tag_ids = array_values( array_map(
-				function($tag){ return $tag->id; },
-				$tags
-			));
+        }
 
-	        $new_article = new Article($new_post);
-		    $new_article->save();
-		    $new_article->tags()->sync($tag_ids);
+        //Tag handler
+            
+	    $tags = Tag::input('tags');
+		$tag_ids = array_values( array_map(
+			function($tag){ return $tag->id; },
+			$tags
+		));
+        
+		dd($new_post);
+        # cover upload handler
+        if(!empty($new_post['cover'])){
 
-		    if(!empty($new_post['cover'])){
-		          $img = Input::file('cover');
-			      $directory = path('public').'public/thumbnails/articles/';
-			      Input::upload('cover', $directory, Input::file('cover.name'));
+	        $extension = File::extension($new_post['cover']['name']);
+	        $directory = path('public').'images/thumbnails/articles/';
+	        $filename = sha1(time()).".{$extension}";
+	        $upload_sucess = Input::upload('cover', $directory, $filename);
+			if($upload_sucess){
+				$new_post['cover'] = URL::to('images/thumbnails/articles/'.$filename);
+
 			}
 
-		    return Redirect::to('dojo/articles/');
-		}	
+		}
+		$new_article = new Article($new_post);
+        $new_article->save();
+        $new_article->tags()->sync($tag_ids);
+    	return Redirect::to('dojo/articles/');
+			
 	}
 
 	/**
