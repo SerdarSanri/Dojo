@@ -5,7 +5,7 @@
         <span class="divider">/</span>
     </li>
     <li>
-        <a href="{{URL::to('/dojo/articles')}}" class="active">Articles</a>
+        <a href="{{URL::to('/dojo/projects')}}" class="active">Projects</a>
         <span class="divider">/</span>
     </li>
      <li>
@@ -15,14 +15,14 @@
 </ul>
   <div id="content" class="colM">
         
-        <h1>Editing Article "{{$article->title}}" </h1>
+        <h1>Editing project "{{$project->title}}" </h1>
         
 <div id="content-main">
     
         
     
-    <form enctype="multipart/form-data" action="" method="put" id="user_form" class="form-horizontal well">{{Form::token()}}
-     {{ Form::hidden('post_author', $user->id) }}
+    <form enctype="multipart/form-data" action="{{URL::to_route('dojo::update_project')}}" method="POST" id="user_form" class="form-horizontal well">{{Form::token()}}
+     {{ Form::hidden('id', $id) }}
 <fieldset class="module aligned wide">
                  @if($errors->has())
         <div class="control-group">
@@ -45,7 +45,7 @@
                                 <div class="control-label"><label for="id_Title" class="required">Title:</label></div>
                                 <div class="controls">
                                     
-                                             {{Form::text('title', $article->title ,array('class' => 'span8','maxlength'=>'30'))}}
+                                             {{Form::text('title', $project->title ,array('class' => 'span8','maxlength'=>'255'))}}
                                         
                                         
                                     
@@ -64,77 +64,22 @@
 
                 </div>
             
-    
-            
-            
-                <div class="control-group  field-password1">
-                    
-                        
-                            
-                                <div class="control-label"><label for="tags" class="required">Tags:</label></div>
-                                <div class="controls">
-                                    
-                                        
-                                            <input id="id_password1" type="text" name="tags" class="span8" />
-                                        
-                                        
-                                    
-
-                                    
-
-                                    
-
-                                </div>
-                            
-                        
-
-                </div>
-            
-    
-            
-            <!--
-                <div class="control-group  field-password">
-                    
-                        
-                            
-                                <div class="control-label"><label for="id_password2" class="required">Cover:</label></div>
-                                <div class="controls">
-                                    
-                                        
-                                             {{Form::file('cover', array('name'=>'cover','id'=>'cover'))}}
-                                        
-                                        
-                                    
-
-                                    
-
-                                    
-                                        <p class="help-block">
-                                            Enter the same password as above, for verification.
-                                        </p>
-                                    
-
-                                </div>
-                            
-                        
-
-                </div> -->
                 <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Draft:</label></div>
                                 <div class="controls">
-                                    {{Form::select('draft', array(0 => 'No',1 => 'Yes'),0)}}
+                                    {{Form::select('draft', array(0 => 'No',1 => 'Yes'),$project->draft)}}
                                </div>
                     </div>
                      <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Published:</label></div>
                                 <div class="controls">
-                                      {{Form::select('published', array(0 => 'No',1 => 'Yes'),0)}}
+                                      {{Form::select('published', array(0 => 'No',1 => 'Yes'),$project->published)}}
                                 </div>
                     </div>
                     <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Cover:</label></div>
                                 <div class="controls">
-                                    {{ Form::textarea('post_body', $article->post_body) }}
+                                    {{ Form::textarea('project_body', $project->project_body) }}
                                 </div>
                     </div>
 
@@ -159,12 +104,8 @@
             
         </div>
         <div class="pull-right save-options-box">
-            
-                <a href="{{URL::to_route('dojo::index_article')}}"><input type="submit" value="Save" name="_continue"  class="btn btn-primary"/></a>
-            
-            
-                <a href="{{URL::to_route('dojo::index_article')}}"><input value="Cancel" name="_cancel"  class="btn"/></a>
-            
+                                            {{ Form::submit('Actualizar',array('class'=>'btn btn-primary')) }}  {{ Form::submit('Cancelar',array('class'=>'btn'))}}
+
         </div>
     </div>
 </div>
@@ -175,7 +116,7 @@
         <script type="text/javascript">
                $(function() {
                      $('#mytext').redactor({
-                           imageUpload: '{{URL::to_route("dojo::new_image")}}',
+                           imageUpload: '{{URL::to_route("dojo::new_image_project")}}',
                            
                      });
                });

@@ -21,8 +21,8 @@
     
         
     
-    <form enctype="multipart/form-data" action="" method="put" id="user_form" class="form-horizontal well">{{Form::token()}}
-     {{ Form::hidden('post_author', $user->id) }}
+    <form enctype="multipart/form-data" action="update" method="POST" id="user_form" class="form-horizontal well">{{Form::token()}}
+     {{ Form::hidden('id', $id) }}
 <fieldset class="module aligned wide">
                  @if($errors->has())
         <div class="control-group">
@@ -122,13 +122,13 @@
                 <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Draft:</label></div>
                                 <div class="controls">
-                                    {{Form::select('draft', array(0 => 'No',1 => 'Yes'),0)}}
+                                    {{Form::select('draft', array(0 => 'No',1 => 'Yes'),$article->draft)}}
                                </div>
                     </div>
                      <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Published:</label></div>
                                 <div class="controls">
-                                      {{Form::select('published', array(0 => 'No',1 => 'Yes'),0)}}
+                                      {{Form::select('published', array(0 => 'No',1 => 'Yes'),$article->published)}}
                                 </div>
                     </div>
                     <div class="control-group">
@@ -160,10 +160,10 @@
         </div>
         <div class="pull-right save-options-box">
             
-                <a href="{{URL::to_route('dojo::index_article')}}"><input type="submit" value="Save" name="_continue"  class="btn btn-primary"/></a>
+                <input type="submit" value="Save" class="btn btn-primary"/>
             
             
-                <a href="{{URL::to_route('dojo::index_article')}}"><input value="Cancel" name="_cancel"  class="btn"/></a>
+                <input value="Cancel" class="btn"/>
             
         </div>
     </div>

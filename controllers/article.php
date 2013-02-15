@@ -98,12 +98,10 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 	
 	public function get_edit($id){
 		
-		$user = Auth::user();
-
 		$article = Article::find($id);
 		$this->layout->nest('content','dojo::articles.edit',array(
 			'article'=>$article,
-			'user'=>$user,
+			 'id'=>$id,
 			
 		));
 	}
@@ -113,7 +111,7 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 	 * This function it will analyse the new data with the old one and check what it will be updated in the defined article
 	 */
 	
-	public function put_edit(){
+	public function post_edit(){
 		$id = Input::get('id');
 		$olddata = Article::find($id);
 		$post_title = Input::get('title');
@@ -167,8 +165,6 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
         $new_post =  Input::all();
         unset($new_post['csrf_token']);
         unset($new_post['tags']);
-        unset($new_post['_continue']);
-        unset($new_post['_cancel']);
         $new_post['slug']= Str::slug($new_post['title']);    	
    
 	    $rules = array(
@@ -195,9 +191,8 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 			$tags
 		));
         
-		dd($new_post);
         # cover upload handler
-        if(!empty($new_post['cover'])){
+        if(!empty($new_post['cover']['name'])){
 
 	        $extension = File::extension($new_post['cover']['name']);
 	        $directory = path('public').'images/thumbnails/articles/';
@@ -208,6 +203,8 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 
 			}
 
+		}else{
+			unset($new_post['cover']);
 		}
 		$new_article = new Article($new_post);
         $new_article->save();
@@ -218,7 +215,6 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 
 	/**
 	 * Function that handle with image upload when using refactor editor
-	 * @todo fix upload of images
 	 * @return json response with link for the image
 	 */
 	public function post_redactorupload(){
@@ -273,9 +269,3 @@ class Dojo_Article_Controller extends Dojo_Base_Controller{
 
 
 }
-/**
- * @Todo
- *
- * Fix search behaviour
- * Fix upload files
- */

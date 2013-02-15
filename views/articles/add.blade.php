@@ -11,7 +11,7 @@
         <a href="" class="active">New</a>
         <span class="divider">/</span>
     </li>
-</ul>
+</ul>           
   <div id="content" class="colM">
         
         <h1>Add Article</h1>
@@ -21,7 +21,7 @@
         
     
     <form enctype="multipart/form-data" action="" method="post" id="user_form" class="form-horizontal well">{{Form::token()}}
-     {{ Form::hidden('post_author', $user->id) }}
+     {{ Form::hidden('author_id', $user->id) }}
 <fieldset class="module aligned wide">
     
     
@@ -36,7 +36,7 @@
                                 <div class="controls">
                                     
                                         
-                                            <input id="id_Title" class="span8" type="text" name="post_title" maxlength="30" />
+                                            <input id="id_Title" class="span8" type="text" name="title" maxlength="30" />
                                         
                                         
                                     
@@ -127,10 +127,10 @@
         </div>
         <div class="pull-right save-options-box">
             
-                <a href="{{URL::to_route('dojo::index_article')}}"><input type="submit" value="Save" name="_continue"  class="btn btn-primary"/></a>
+                <a href="{{URL::to_route('dojo::index_article')}}"><input type="submit" value="Save" class="btn btn-primary"/></a>
             
             
-                <a href="{{URL::to_route('dojo::index_article')}}"><input value="Cancel" name="_cancel"  class="btn"/></a>
+                <a href="{{URL::to_route('dojo::index_article')}}"><input value="Cancel"   class="btn"/></a>
             
         </div>
     </div>

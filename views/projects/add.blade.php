@@ -21,7 +21,7 @@
         
     
     <form enctype="multipart/form-data" action="" method="post" id="user_form" class="form-horizontal well">{{Form::token()}}
-     {{ Form::hidden('post_author', $user->id) }}
+     {{ Form::hidden('author_id', $user->id) }}
 <fieldset class="module aligned wide">
     
     
@@ -36,7 +36,7 @@
                                 <div class="controls">
                                     
                                         
-                                            <input id="id_Title" class="span8" type="text" name="post_title" maxlength="30" />
+                                            <input id="id_Title" class="span8" type="text" name="title" maxlength="150" />
                                         
                                         
                                     
@@ -45,7 +45,7 @@
 
                                     
                                         <p class="help-block">
-                                            Required. 30 characters or fewer. Letters, digits and /./+/-/_ only.
+                                            Required. 150 characters or fewer. Letters, digits and /./+/-/_ only.
                                         </p>
                                     
 
@@ -55,30 +55,7 @@
 
                 </div>
         
-            
-                <div class="control-group  field-password1">
-                    
-                        
-                            
-                                <div class="control-label"><label for="tags" class="required">Tags:</label></div>
-                                <div class="controls">
-                                    
-                                        
-                                            <input id="id_password1" type="text" name="tags" class="span8" />
-                                        
-                                        
-                                    
-
-                                    
-
-                                    
-
-                                </div>
-                            
-                        
-
-                </div>
-            
+        
 
                 <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Draft:</label></div>
@@ -95,7 +72,7 @@
                     <div class="control-group">
                     <div class="control-label"><label for="id_password2" class="required">Cover:</label></div>
                                 <div class="controls">
-                                    {{ Form::textarea('post_body', '',array('id'=>'mytext')) }}
+                                    {{ Form::textarea('project_body', '',array('id'=>'mytext')) }}
                                 </div>
                     </div>
 
@@ -121,10 +98,10 @@
         </div>
         <div class="pull-right save-options-box">
             
-                <a href="{{URL::to_route('dojo::index_article')}}"><input type="submit" value="Save" name="_continue"  class="btn btn-primary"/></a>
+                <a href="{{URL::to_route('dojo::index_article')}}"><input type="submit" value="Save"  class="btn btn-primary"/></a>
             
             
-                <a href="{{URL::to_route('dojo::index_article')}}"><input value="Cancel" name="_cancel"  class="btn"/></a>
+                <a href="{{URL::to_route('dojo::index_article')}}"><input value="Cancel" class="btn"/></a>
             
         </div>
     </div>
@@ -136,7 +113,7 @@
         <script type="text/javascript">
                $(function() {
                      $('#mytext').redactor({
-                           imageUpload: '{{URL::to_route("dojo::new_image")}}',
+                           imageUpload: '{{URL::to_route("dojo::new_image_project")}}',
                            
                      });
                });

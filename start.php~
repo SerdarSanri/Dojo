@@ -11,5 +11,5 @@ Autoloader::namespaces(array(
 
 Auth::extend('dojoauth',function(){
     return new Dojo\Libraries\DojoAuth;
-});
+})
 

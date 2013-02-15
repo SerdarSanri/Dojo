@@ -4,7 +4,7 @@
         <span class="divider">/</span>
     </li>
     <li>
-        <a href="{{URL::to('/dojo/articles')}}" class="active">Articles</a>
+        <a href="{{URL::to('/dojo/projects')}}" class="active">Projects</a>
         <span class="divider">/</span>
     </li>
 </ul>
@@ -14,12 +14,12 @@
     @if(Session::has('title'))
         <h1>{{ Session::get('message') }}</h1>
     @else 
-         <h1>List of articles</h1>
+         <h1>List of projects</h1>
     @endif
     <ul class="object-tools pull-right">
 
         <li>
-            <a href="/dojo/articles/new" class="addlink btn btn-primary">Add Article</a>
+            <a href="/dojo/projects/new" class="addlink btn btn-primary">Add Project</a>
         </li>
 
     </ul>
@@ -59,15 +59,15 @@
                                             <ul class="dropdown-menu">
 
                                                 <li class="active">
-                                                    <a href="{{URL::to_route('dojo::index_article',array('index'))}}">All</a>
+                                                    <a href="{{URL::to_route('dojo::index_project',array('index'))}}">All</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('draft','1'))}}">Yes</a>
+                                                    <a href="{{URL::to_route('dojo::index_project',array('draft','1'))}}">Yes</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('draft','0'))}}">No</a>
+                                                    <a href="{{URL::to_route('dojo::index_project',array('draft','0'))}}">No</a>
                                                 </li>
 
                                             </ul>
@@ -77,15 +77,15 @@
                                             <ul class="dropdown-menu">
 
                                                 <li class="active">
-                                                    <a href="{{URL::to_route('dojo::index_article',array('index'))}}">All</a>
+                                                    <a href="{{URL::to_route('dojo::index_project',array('index'))}}">All</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('published','1'))}}">Yes</a>
+                                                    <a href="{{URL::to_route('dojo::index_project',array('published','1'))}}">Yes</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="{{URL::to_route('dojo::index_article',array('published','0'))}}">No</a>
+                                                    <a href="{{URL::to_route('dojo::index_project',array('published','0'))}}">No</a>
                                                 </li>
 
                                             </ul>
@@ -103,7 +103,7 @@
                     <div class="nav-collapse collapse navbar-responsive-collapse">
                         <div class="pull-right">
                             <!--
-                            <form action="articles/search" method="POST" class="navbar-search pull-left" id="search-change-list">
+                            <form action="projects/search" method="POST" class="navbar-search pull-left" id="search-change-list">
                                 <div class="input-append">
                                                 {{ Form::text('keyword', '', array('id'=>'keyword')) }}
 
@@ -125,7 +125,7 @@
 
             <div class="well">
                 <span class="label label-inverse pull-left info-counter">
-                    {{$count}} Articles
+                    {{$count}} Projects
 
                 </span>
                 <div class="divider"></div>
@@ -138,9 +138,9 @@
 
                             <select name="action" id="action">
                                 <option value="" selected="selected">---------</option>
-                                <option value="delete_selected">Delete selected articles</option>
-                                <option value="publish_selected">Publish selected articles</option>
-                                <option value="draft_selected">Draft selected articles </option>
+                                <option value="delete_selected">Delete selected projects</option>
+                                <option value="publish_selected">Publish selected projects</option>
+                                <option value="draft_selected">Draft selected projects </option>
                             </select>
 
                         </label>
@@ -218,12 +218,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($articles as $post)
+                        @foreach($projects as $post)
                         <tr class="row{{$post->id}}">
                             <td class="action-checkbox">
                                 <input type="checkbox" class="action-select" value="{{$post->id}}" name="value{{$post->id}}" /></td>
                             <th>
-                                <a href="{{URL::to_route('dojo::edit_article',array($post->id))}}">{{$post->title}}</a>
+                                <a href="{{URL::to_route('dojo::edit_project',array($post->id))}}">{{$post->title}}</a>
                             </th>
                             <td>{{$post->author->username}}</td>
                             <td>{{$post->created_at}}</td>
@@ -312,8 +312,3 @@
     
 </script>
 
-<?php
-/*
-/@todo list
-/-Implement search 
-*/
