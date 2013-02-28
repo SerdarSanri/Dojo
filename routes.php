@@ -30,7 +30,9 @@ Route::post('/(:bundle)/projects/search',array('uses'=>'Dojo::project@search'));
 Route::get('/(:bundle)/projects/results/(:all)',array('as'=>'dojo::results_project','uses'=>'Dojo::project@results'));
 Route::put('/(:bundle)/projects/edit/update',array('as'=>'dojo::update_project','uses'=>'Dojo::project@update'));
 
-
+//settings
+Route::any('/(:bundle)/settings',array('uses'=>'Dojo::setting@index'));
+Route::any('/(:bundle)/settings/social',array('uses'=>'Dojo::setting@social'));
 
 Route::controller(Controller::detect('dojo'));
 

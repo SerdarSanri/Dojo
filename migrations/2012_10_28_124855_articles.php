@@ -18,7 +18,7 @@ class Dojo_Articles {
             $table->string('cover',256);
             $table->integer('comments');
             $table->boolean('draft');
-            $table->boolean('visible')
+            $table->boolean('published');
             $table->timestamps();
         });
     }
